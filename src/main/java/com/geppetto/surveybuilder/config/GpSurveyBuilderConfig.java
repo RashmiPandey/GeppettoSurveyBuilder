@@ -53,6 +53,8 @@ public class GpSurveyBuilderConfig {
 	             new ClassPathResource( "sql_queries/Question_SQL.properties"),
              
              new ClassPathResource( "sql_queries/Client_Default_Activity_SQL.properties"),
+             new ClassPathResource( "sql_queries/Store_SQL.properties"),
+             new ClassPathResource( "sql_queries/Route_SQL.properties"),
              new ClassPathResource( "sql_queries/Product_Default_Activity_SQL.properties"),
              
 
