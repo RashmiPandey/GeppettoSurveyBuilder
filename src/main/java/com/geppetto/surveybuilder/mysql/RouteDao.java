@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.geppetto.surveybuilder.domain.core.Route;
+import com.geppetto.surveybuilder.domain.core.Store;
 import com.geppetto.surveybuilder.interfaces.dao.IRouteDao;
 
 @Transactional
@@ -67,6 +68,18 @@ public class RouteDao implements IRouteDao {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void delete_Route(Route the_Route) throws Exception {
+		entityManager.remove(entityManager.getReference(Route.class, the_Route.getId()));
+
+	}
+
+	@Override
+	public Route update_Route(Route the_Route) throws Exception {
+		// TODO Auto-generated method stub
+		return entityManager.merge(the_Route);
 	}
 
 }

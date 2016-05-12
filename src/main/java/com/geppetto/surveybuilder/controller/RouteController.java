@@ -74,4 +74,33 @@ public class RouteController {
 
 	}
 
+	@ApiOperation(value = "/update_route", httpMethod = "POST", notes = "creates a store of Stores", response = Store.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "The request was fulfilled"),
+			@ApiResponse(code = 404, message = "The server has not found anything matching the URI given"),
+			@ApiResponse(code = 500, message = "Internal server error due to encoding the data"),
+			@ApiResponse(code = 400, message = "Bad request due to decoding the data"),
+			@ApiResponse(code = 412, message = "Pre condition failed due to required data not found") })
+
+	@RequestMapping(method = RequestMethod.POST, value = "/update_route", headers = "Accept=application/json")
+	@ResponseBody
+	public Route update_route(@RequestBody Route the_Route) throws Exception {
+		Route a_the_Route;
+		a_the_Route = routeServiceImpl.update_Route(the_Route);
+		return a_the_Route;
+	}
+
+	@ApiOperation(value = "/delete_route", httpMethod = "POST", notes = "creates a store of Stores", response = Store.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "The request was fulfilled"),
+			@ApiResponse(code = 404, message = "The server has not found anything matching the URI given"),
+			@ApiResponse(code = 500, message = "Internal server error due to encoding the data"),
+			@ApiResponse(code = 400, message = "Bad request due to decoding the data"),
+			@ApiResponse(code = 412, message = "Pre condition failed due to required data not found") })
+
+	@RequestMapping(method = RequestMethod.POST, value = "/delete_route", headers = "Accept=application/json")
+	@ResponseBody
+	public void delete_route(@RequestBody Route the_Route) throws Exception {
+
+		routeServiceImpl.delete_Route(the_Route);
+	}
+
 }

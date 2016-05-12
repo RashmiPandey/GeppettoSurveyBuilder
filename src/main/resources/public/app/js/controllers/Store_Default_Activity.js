@@ -13,7 +13,7 @@
  * 
  */
 
-app.controller("Route_Default_Activity", [ '$scope', '$rootScope', '$location', '$window', '$q', '$http', 'ProductId', 'RestURL',
+app.controller("Store_Default_Activity", [ '$scope', '$rootScope', '$location', '$window', '$q', '$http', 'ProductId', 'RestURL',
 				    function( $scope, $rootScope, $location, $window, $q, $http, ProductId, RestURL) {
 
 		$scope.route = {
@@ -22,8 +22,6 @@ app.controller("Route_Default_Activity", [ '$scope', '$rootScope', '$location', 
 		        location: '',
 		        route_id:''
 		    };
-		
-		
 	
 		$scope.init = function () {
 			$scope.getAllRoute();
@@ -33,18 +31,37 @@ app.controller("Route_Default_Activity", [ '$scope', '$rootScope', '$location', 
 			$scope.getRoutesStore();
 		}
 		
+		$scope.createStores =function(routeList){
+			$scope.store = {
+			        id: '',
+			        store_name: '',
+			        location: '',
+			        route_id:''
+				};
+			$scope.storeList.route_id = routeList.id;
+			$scope.storeList.id='';
+			console.log("----$scope.storeList---",angular.toJson($scope.storeList));
+			
+		}
+		
+		
 		$scope.setStores= function(selectedStores) {
+			console.log("---------seletse storesz in store"+angular.toJson(selectedStores));
 			if (selectedStores === undefined || selectedStores === null  ) {
-				var selectedClient_id = $scope.storeList.client_id;
+				//var selectedClient_id = $scope.storeList.client_id;
 				$scope.store = {
 					        id: '',
 					        store_name: '',
 					        location: '',
 					        route_id:''
 						};
-				$scope.store.id = selectedClient_id;
+				console.log("---selectedStores---",selectedStores);
+				$scope.store.id = selectedStores;
+				console.log("---set store---"+angular.toJson($scope.store));
+				$scope.storeList.id='';
 			} else {
 				$scope.storeList = selectedStores;
+				console.log("-----in else part----",$scope.storeList)
 			}
 		}
 		
@@ -66,14 +83,14 @@ app.controller("Route_Default_Activity", [ '$scope', '$rootScope', '$location', 
             
         		$scope.getRoutesStore();
         	} else {
-        		$scope.product.client_id = '';
+        		//$scope.storeList.id = '';
             	$scope.routesStore = null;
         	}
         	
         };
 		
 		$scope.getRoutesStore = function() {
-			console.log("Route -> getRoutesStore -> $scope.product.client_id: " + $scope.route.id);
+			console.log("Route -> getRoutesStore -> $scope.Store.route_id: " + $scope.route.id);
         	$http.get( RestURL.baseURL+'Store/get_all_store_by_route_id/'+ $scope.route.id ).success(function(response) {
         		console.log("Store -> StoreList for Route -> " + JSON.stringify( response ));
         		$scope.routesStore = response;
@@ -83,10 +100,12 @@ app.controller("Route_Default_Activity", [ '$scope', '$rootScope', '$location', 
         };
         
         $scope.create = function () {
-
+        	//console.log("------------i am heRE---------------"+angular.toJson( $scope.storeList));
+			//console.log("-----store id---"+$scope.store.id)
+			//$scope.storeList=$scope.store;
 		  var deferred = $q.defer();
-		  $http.post(RestURL.baseURL+'Product_Default_Activity/create_Product/', $scope.product).success(function(response) {
-		  	 alert('Product created successfully');
+		  $http.post(RestURL.baseURL+'Store/create_store', $scope.storeList).success(function(response) {
+		  	 alert('Store created successfully');
 			  	$scope.getRoutesStore();
 			  	$('#create_product_modal').modal('hide');
 		  	 deferred.resolve(response);
@@ -103,7 +122,7 @@ app.controller("Route_Default_Activity", [ '$scope', '$rootScope', '$location', 
         $scope.search_for_update = function (id) {
 
 		  $http.get(RestURL.baseURL+'Product_Default_Activity/search_for_update_Product/' + id).success(function(response) {
-		  	 console.log('Product updated successfully');
+		  	 console.log('Store updated successfully');
 		  	 $scope.product = response
 		  	 // ProductId.setId(undefined)
 		  }).error(function(err) {

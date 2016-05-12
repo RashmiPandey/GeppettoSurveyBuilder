@@ -94,9 +94,14 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl : 'app/views/ta/Product_Screen-ta.html',
       controller: 'Product_Default_Activity'
     })
+    
+   .when('/Store_Screen-en', {
+      templateUrl : 'app/views/en/store_Screen_en.html',
+      controller: 'Store_Default_Activity'
+    })
     .when('/Route_Screen-en', {
-      templateUrl : 'app/views/en/route_Screen_en.html',
-      controller: 'Route_Default_Activity'
+      templateUrl : 'app/views/en/Route_Sceeen-en.html',
+      controller: 'Route_Screen'
     })
 
     .otherwise('app_level');
